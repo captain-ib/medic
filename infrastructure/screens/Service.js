@@ -81,7 +81,20 @@ export function Service () {
                     </Text>
                 </View>
                 <View style={styles.serviceActions}>
-                   <View></View> 
+                   <GoogleplaceAutocomplete 
+                   placeholder='Search for your location'
+                        query={{
+                            key:'AIzaSyCoe96PTAoqGDIa9Cor3R7u_rpadh0lobo',
+                            language:'en'
+                        }}
+                        minlength={3}
+                        enablePoweredByContainer={false}
+                        onPress={(data,details = null) => {
+                            console.log('Details are as follow',details)
+                        }}
+                        fetchDetails={true}
+                        nearbyPlacesAPI='GoooglePlacesSearch'
+                   /> 
                 </View>
             </View>
         </SafeAreaView>

@@ -7,11 +7,30 @@ import {FontAwesome, FontAwesomeIcon} from '@fortawesome/react-native-fontawesom
 import {faCross} from '@fortawesome/free-solid-svg-icons';
 import {Button, TextInput} from 'react-native-paper';
 import {Theme} from '../components/Theme';
+import { authentication } from '../../firebase/firebase';
+import {createUserWithEmailAndPassword} from 'firebase/auth'
 
 
 export function Signup({navigation}) {
     const [appIsReady, setAppIsReady] = useState(false);
     const [accountType,setAccountType] = useState('individual');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [desc, setDesc] = useState('');
+
+    function createUserAuth(){
+        createUserWithEmailAndPassword(authentication,email,password)
+        .then((userCredentials) => {
+            console.log(userCredentials)
+        })
+        .catch(error => console.error(error))
+    }
+
+    //create an authenticated user
+
+
     useEffect(() => {
         async function prepare() {
             try {
@@ -67,30 +86,40 @@ export function Signup({navigation}) {
                     <TextInput label='First name' 
                     mode='outlined'
                     outlineColor={Theme.colors.bg.tertiary}
-                    activeOutlineColor={Theme.colors.bg.quartenary} />
+                    activeOutlineColor={Theme.colors.bg.quartenary} 
+                    onChangeText={(text) => setFirstName()}
+                    />
                     
                     <TextInput label='Last name' 
                     mode='outlined'
                     outlineColor={Theme.colors.bg.tertiary}
-                    activeOutlineColor={Theme.colors.bg.quartenary} />
+                    activeOutlineColor={Theme.colors.bg.quartenary} 
+                    onChangeText={(text) => setLastName()}
+                    />
                     
                     <TextInput label='Phone number' 
                     mode='outlined'
                     outlineColor={Theme.colors.bg.tertiary}
                     activeOutlineColor={Theme.colors.bg.quartenary}
-                    keyboardType='phone-pad' />
+                    keyboardType='phone-pad' 
+                    onChangeText={(text) => setPhone()}
+                    />
                     
                     <TextInput label='email address' 
                     mode='outlined'
                     outlineColor={Theme.colors.bg.tertiary}
                     activeOutlineColor={Theme.colors.bg.quartenary}
-                    keyboardType='email-address' />
+                    keyboardType='email-address' 
+                    onChangeText={(text) => setEmail()}
+                    />
                     
                     <TextInput label='create password' 
                     mode='outlined'
                     outlineColor={Theme.colors.bg.tertiary}
                     activeOutlineColor={Theme.colors.bg.quartenary}
-                    secureTextEntry={true} />
+                    secureTextEntry={true} 
+                    onChangeText={(text) => setPassword()}
+                    />
                     
                     <TextInput label='confirm password' 
                     mode='outlined'
@@ -115,6 +144,7 @@ export function Signup({navigation}) {
                         paddingVertical:Theme.sizes[3],
                         marginTop:Theme.sizes[2]
                     }} 
+                    onPress={() => createUserAuth}
                     >Create account</Button>
 
                     {/* navigating to login screen */}
