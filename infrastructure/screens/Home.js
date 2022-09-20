@@ -165,8 +165,11 @@ const topProviders = [
     )
   }
 
-export function Home({navigation}){
+export function Home({navigation,route}){
     const [appIsReady, setAppIsReady] = useState(false);
+
+    //access data from a previous screen
+    const {userUID} = route.params;
 
     useEffect(() => {
         async function prepare() {

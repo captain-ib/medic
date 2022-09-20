@@ -6,12 +6,12 @@ import { Service } from './infrastructure/screens/Service';
 export default function App() {
   
   return (
-      <Service/>
-     //<NavigationContainer>
       
-       //<StackNavigation/>
-        //{/* <Home/> */}
-     //</NavigationContainer>
+     <NavigationContainer>
+        {/* { <Service/> } */}
+       <StackNavigation/>
+        {/* <Home/> */}
+     </NavigationContainer>
       
   )
 };

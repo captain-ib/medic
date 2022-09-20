@@ -7,9 +7,33 @@ import {FontAwesome, FontAwesomeIcon} from '@fortawesome/react-native-fontawesom
 import {faCross} from '@fortawesome/free-solid-svg-icons';
 import {Button, TextInput} from 'react-native-paper';
 import {Theme} from '../components/Theme';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
+import { authentication } from '../../firebase/firebase';
 
 
-export function Login({navigation}) {
+export function Login({navigation,route}) {
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
+
+    function LoginAuth(){
+        signInWithEmailAndPassword(authentication,email,password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log(user);
+
+            onAuthStateChanged(authentication,(currentUser) => {
+                navigation.navigate('Home',{
+                    userUID:currentUser.uid,
+                })
+            })
+        })
+    }
+
+
+
+
+
     const [appIsReady, setAppIsReady] = useState(false);
     const [accountType,setAccountType] = useState('individual');
     useEffect(() => {
@@ -51,12 +75,27 @@ export function Login({navigation}) {
                     <TextInput label='E mail' 
                     mode='outlined'
                     outlineColor={Theme.colors.bg.tertiary}
-                    activeOutlineColor={Theme.colors.bg.quartenary} />
+                    activeOutlineColor={Theme.colors.bg.quartenary} 
+                    onChangeText={(text) => setEmail(text)}
+                    value={email}
+                    />
                     
                     <TextInput label='Password' 
                     mode='outlined'
                     outlineColor={Theme.colors.bg.tertiary}
-                    activeOutlineColor={Theme.colors.bg.quartenary} />
+                    activeOutlineColor={Theme.colors.bg.quartenary}
+                    secureTextEntry={true}
+                    onChangeText={(text) => setPassword(text)}
+                    value={password}
+                    />
+                    <Button mode= 'contained' 
+                    color={ Theme.colors.ui.nurseGray} 
+                    style={{
+                        paddingVertical:Theme.sizes[3],
+                        marginTop:Theme.sizes[2]
+                    }} 
+                    onPress={LoginAuth}
+                    >Create account</Button>
                     
                     </View>
         </SafeAreaView>

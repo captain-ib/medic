@@ -54,7 +54,7 @@ export function Intro({navigation}) {
                     style={{paddingVertical:Theme.sizes[3], 
                     marginBottom:Theme.sizes[3]}} 
                      onPress={() => navigation.navigate('Signup')}>SIGN UP</Button>
-                    <Button mode='outlined' color={Theme.colors.text.tertiary} style={{paddingVertical:Theme.sizes[3]}}>SIGN IN</Button>
+                    <Button mode='outlined' color={Theme.colors.text.tertiary} style={{paddingVertical:Theme.sizes[3]}} onPress={() => navigation.navigate("Login")}>SIGN IN</Button>
                 </View>
             </View>
         </SafeAreaView>

@@ -5,7 +5,7 @@ import { Theme } from '../components/Theme';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faAngleDown, faAngleUp, faLocationDot, faNoteSticky,faWallet } from '@fortawesome/free-solid-svg-icons';
 import MapView,{PROVIDER_GOOGLE} from 'react-native-maps';
-import {GoogleplaceAutocomplete} from 'react-native-google-places-autocomplete'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 
 const {width,height} = Dimensions.get('window');
@@ -13,8 +13,8 @@ const ASPECT_RATIO = width/height;
 const LATITUDE_DELTA = 0.02;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const INITIAL_POSITION = {
-  latitude: 9.075135811572261,
-  longitude:  7.464601873397111, 
+  latitude: 9.150144897363797, 
+  longitude: 7.330128403395713,
   latitudeDelta: LATITUDE_DELTA,
   longitudeDelta: LONGITUDE_DELTA
 }
@@ -25,10 +25,10 @@ export function Service () {
     return (
         <SafeAreaView style={styles.areaView}>
             <View style={styles.locationView}>
-                <MapView 
+                <MapView
                 style={styles.map}
                 provider={PROVIDER_GOOGLE}
-                INITIAL_POSITION={INITIAL_POSITION}
+                initialRegion={INITIAL_POSITION}
                 />
                 <View style={styles.serviceHeaders}>
                     <Image 
@@ -56,46 +56,45 @@ export function Service () {
                 </View>
             </View>
             <View style={styles.container}>
-                <View style={styles.serviceDesc}>
-                    <View style={styles.descHeaders}>
-                        <View style={styles.description}>
-                            <FontAwesomeIcon icon={faNoteSticky}
-                            size={Theme.sizes[3]}
-                            color={Theme.colors.brand.brandGreen}
-                            style={{marginRight:4}}
-                            />
-                            <Text style={styles.descInfo}>Description</Text>
+                    <View style={styles.serviceDesc}>
+                        <View style={styles.descHeaders}>
+                            <View style={styles.description}>
+                                <FontAwesomeIcon icon={faNoteSticky} 
+                                size={Theme.sizes[3]} 
+                                color={Theme.colors.brand.brandGreen} 
+                                style={{marginRight:4}}/>
+                                <Text style={styles.descInfo}>Description</Text>
+                            </View>
+                            <View style={styles.price}>
+                                <FontAwesomeIcon icon={faWallet} 
+                                size={Theme.sizes[3]} 
+                                color={Theme.colors.brand.brandGreen} 
+                                style={{marginRight:4}}/>
+                                <Text style={styles.priceInfo}>NGN23,500</Text>
+                            </View>
                         </View>
-                        <View style={styles.price}>
-                            <FontAwesomeIcon icon={faWallet}
-                            sizes={Theme.sizes[3]}
-                            color={Theme.colors.brand.brandGreen}
-                            style={{marginRight:4}}/>
-                            <Text style={styles.priceInfo}>NGN23,500</Text>
-                        </View>
+                        <Text>
+                            Z Medicals Laboratory is a state of the art laboratory in the city of Abuja, 
+                            which offers a fully automated laboratory services in various sub-specialties. 
+                            With the innovative use of new technologies.
+                        </Text>
                     </View>
-                    <Text>
-                        Z Medicals Laboratory is a state of the art laboratory in the city of Abuja, 
-                        which offers a fully automated laboratory services in various sub-specialties. 
-                        With the innovative use of new technologies.
-                    </Text>
-                </View>
-                <View style={styles.serviceActions}>
-                   <GoogleplaceAutocomplete 
-                   placeholder='Search for your location'
-                        query={{
-                            key:'AIzaSyCoe96PTAoqGDIa9Cor3R7u_rpadh0lobo',
-                            language:'en'
-                        }}
-                        minlength={3}
-                        enablePoweredByContainer={false}
-                        onPress={(data,details = null) => {
-                            console.log('Details are as follow',details)
-                        }}
-                        fetchDetails={true}
-                        nearbyPlacesAPI='GoooglePlacesSearch'
-                   /> 
-                </View>
+                    <View style={styles.serviceActions}>
+                        <GooglePlacesAutocomplete
+                        placeholder='Search for your location'
+                            query={{
+                                key:'AIzaSyCoe96PTAoqGDIa9Cor3R7u_rpadh0lobo',
+                                language:'en'
+                            }}
+                            minLenght={3}
+                            enablePoweredByContainer={false}
+                            onPress={(data,details = null) => {
+                                console.log('Details are as follow',details)
+                            }}
+                            fetchDetails={true}
+                            nearbyPlacesAPI='GooglePlacesSearch'
+                        />
+                    </View>
             </View>
         </SafeAreaView>
     )
@@ -109,15 +108,15 @@ const styles = StyleSheet.create({
         flex:2
     },
     map:{
-        flex:1,
+        flex:1
     },
     container:{
         flex:4,
         padding:Theme.sizes[3],
     },
     serviceHeaders:{
-        bottom:10,
         position:'absolute',
+        bottom:10,
         flexDirection:'row',
         padding:Theme.sizes[2],
         marginHorizontal:Theme.sizes[3],
@@ -154,7 +153,6 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
     serviceDesc:{
-        flex:1,
         padding:Theme.sizes[2],
         marginBottom:Theme.sizes[3],
         backgroundColor:Theme.colors.bg.secondary,
